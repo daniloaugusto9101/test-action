@@ -1,0 +1,30 @@
+# Nome do Workflow
+name: Exemplo de fluxo de trabalho
+
+# Quando este pipeline sera disparado
+on:
+  # Toda vez que commitar para branch MAIN este pipeline ira executar
+  push:
+    branches: [main]
+
+jobs:
+  test-unidade:
+    # provisiona uma máquina ubunto
+    runs-on: ubuntu-latest
+    # faz uma cópia do código para a maquina provisionada e verifica a integridade do código
+    steps:
+      - uses: actions/checkout/v3
+      - name: usar Node 18x
+        # comando para intalar node na maquina
+        uses: actions/setup-node@v3
+        # parametro que define a versao do Node.JS
+        with:
+          node-version: "18.x"
+      # instala as dependecias do Node Js
+      - name: Instalar dependencias
+        run: npm install
+      # Montar a build do projeto
+      - name: Montar a Build
+        run: nom run bluid
+      - name: Rodas teste de unidades
+        run: npx test
